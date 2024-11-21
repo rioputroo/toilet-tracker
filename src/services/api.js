@@ -9,12 +9,27 @@ const api = axios.create({
   },
 });
 
-export const getVisits = async () => {
-  const response = await api.get('/visits');
+export const getEmployees = async () => {
+  const response = await api.get('/employees');
   return response.data;
 };
 
-export const addVisit = async (employeeName) => {
-  const response = await api.post('/visits', { employee_name: employeeName });
+export const addEmployee = async (name) => {
+  const response = await api.post('/employees', { name });
+  return response.data;
+};
+
+export const getSummary = async () => {
+  const response = await api.get('/summary');
+  return response.data;
+};
+
+export const addVisit = async (employeeId) => {
+  const response = await api.post('/visits', { employee_id: employeeId });
+  return response.data;
+};
+
+export const resetTodayVisits = async () => {
+  const response = await api.delete('/visits/today');
   return response.data;
 };

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addVisit } from '../services/api';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
 
 function VisitForm() {
   const [employeeName, setEmployeeName] = useState('');
@@ -22,33 +24,24 @@ function VisitForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-8">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div className="flex gap-4">
-        <input
+        <Input
           type="text"
           value={employeeName}
           onChange={(e) => setEmployeeName(e.target.value)}
           placeholder="Enter employee name"
-          className="flex-1 p-2 border rounded"
           required
           disabled={mutation.isPending}
         />
-        <button
-          type="submit"
-          className={`px-4 py-2 rounded text-white ${
-            mutation.isPending 
-              ? 'bg-blue-300 cursor-not-allowed' 
-              : 'bg-blue-500 hover:bg-blue-600'
-          }`}
-          disabled={mutation.isPending}
-        >
+        <Button type="submit" disabled={mutation.isPending}>
           {mutation.isPending ? 'Adding...' : 'Log Visit'}
-        </button>
+        </Button>
       </div>
       {mutation.isError && (
-        <div className="mt-2 text-red-600">
+        <p className="text-sm text-destructive">
           {mutation.error?.response?.data?.error || 'Failed to add visit. Please try again.'}
-        </div>
+        </p>
       )}
     </form>
   );
